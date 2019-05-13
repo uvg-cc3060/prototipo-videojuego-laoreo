@@ -6,18 +6,23 @@ using UnityEngine.AI;
 public class EnemyFollower : MonoBehaviour
 {
     //empezar con followingPlayer = false
+    public Transform target;
     private NavMeshAgent nvaEnemy;
-    private bool followingPlayer=true;
-    public int life = 100;
+    private Transform  tran;
+    private Vector3 position;
+    private bool followingPlayer=false;
+    // public int life = 100;
     // Start is called before the first frame update
     void Start()
     {
         nvaEnemy = GetComponent<NavMeshAgent>();
-        EventManager.StartListening("PlayerPositionUpdated", UpdatePosition);
-        EventManager.StartListeningTransform("ThrowablePositionUpdated", UpdateTargetPosition);
+        tran = GetComponent<Transform>();
+        position = tran.position;
+        //EventManager.StartListening("PlayerPositionUpdated", UpdatePosition);
+        //EventManager.StartListeningTransform("ThrowablePositionUpdated", UpdateTargetPosition);
 
     }
-
+    /*
     private void Update()
     {
         if (life <= 0)
@@ -25,14 +30,21 @@ public class EnemyFollower : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void UpdatePosition() {
-        if (followingPlayer)
+    */
+    private void Update()
+    {
+    
+    if (followingPlayer)
         {
-            nvaEnemy.SetDestination(PersonajeScript.instance.transform.position);
+           nvaEnemy.SetDestination(target.position);
+        }
+        else {
+            if (!transform.position.Equals(position)) {
+                nvaEnemy.SetDestination(position);
+            }
         }
     }
-
+    /*
     private void UpdateTargetPosition(Transform t)
     {
         followingPlayer = false;
@@ -40,7 +52,7 @@ public class EnemyFollower : MonoBehaviour
         EventManager.TriggerEvent("EnemyFollowingPlayer");
     }
 
-
+    /*
     private void OnCollisionEnter(Collision other)
     {
         if (other.collider.CompareTag("Throwable"))
@@ -53,7 +65,7 @@ public class EnemyFollower : MonoBehaviour
         {
             life -= 50;
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,6 +77,9 @@ public class EnemyFollower : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        followingPlayer = false;
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            followingPlayer = false;
+        }
     }
 }
