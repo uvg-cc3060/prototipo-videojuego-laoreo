@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonCharacterController : MonoBehaviour
 {
-    public float speed = 3;
+    public float speed = 6;
     //Animator anim;
 
     private void Start()
@@ -25,11 +25,11 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            speed = 5;
+            speed = 12;
         }
         else
         {
-            speed = 3;
+            speed = 6;
         }
 
         //anim.SetFloat("velocity", speed);

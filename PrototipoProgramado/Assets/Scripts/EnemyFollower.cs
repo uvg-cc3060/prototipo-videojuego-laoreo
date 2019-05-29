@@ -11,6 +11,7 @@ public class EnemyFollower : MonoBehaviour
     private Transform  tran;
     private Vector3 position;
     private bool followingPlayer=false;
+    public float life = 100.0f;
     // public int life = 100;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,11 @@ public class EnemyFollower : MonoBehaviour
                 nvaEnemy.SetDestination(position);
             }
         }
+
+    if(life <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     /*
     private void UpdateTargetPosition(Transform t)
@@ -66,6 +72,14 @@ public class EnemyFollower : MonoBehaviour
             life -= 50;
         }
     }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Weapon")
+        {
+            life -= 50;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

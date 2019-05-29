@@ -6,6 +6,7 @@ public class ObjectSpawner : MonoBehaviour
 {
     public GameObject[] Balls;
     public float time = 20.0f;
+    public int range = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,8 @@ public class ObjectSpawner : MonoBehaviour
         while (true)
         {
             int random = Random.Range(0, Balls.GetLength(0));
-            int a = Random.Range(25, 50);
-            int b = Random.Range(25, 50);
+            int a = Random.Range(range, range * 2);
+            int b = Random.Range(range, range * 2);
 
             int n = Random.Range(0, 1);
             if (n == 0)

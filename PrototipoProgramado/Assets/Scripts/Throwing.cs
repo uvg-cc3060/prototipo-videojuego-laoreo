@@ -4,7 +4,9 @@ using System.Collections;
 public class Throwing : MonoBehaviour {
 
     float time;
-    private bool touch = false;
+    private float tiempo = 0.0f;
+    //private bool touch = false;
+    
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
             time = Time.time;
@@ -32,22 +34,37 @@ public class Throwing : MonoBehaviour {
                 }
                 else
                 {
-                    force = 250f;
+                    force = 200f;
                 }
                 gameObject.tag = "Weapon";
                 GetComponent<Rigidbody>().AddForce(myVector * force);
             }
         }
     }
-    
-    
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            Debug.Log("El tiempo es: " + tiempo);
+            tiempo += Time.deltaTime;
+
+            if (tiempo >= 0.5)
+            {
+                tiempo = 0;
+                gameObject.tag = "Throwable";
+            }
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Colisiono con: " + collision.collider.tag);
         try
         {
-            if (collision.rigidbody.name == "player")
+            if (collision.collider.tag == "Player")
             {
+                Debug.Log("aksdfahsdjfas");
                 Rigidbody rb = GetComponent<Rigidbody>();
                 rb.useGravity = false;
                 rb.isKinematic = true;
@@ -55,10 +72,7 @@ public class Throwing : MonoBehaviour {
                 transform.parent = transform.parent.GetChild(0);
                 transform.localPosition = new Vector3(0.2f, 0.1f, 1);
             }
-            if (collision.rigidbody.tag == "Ground")
-            {
-                gameObject.tag = "Throwable";
-            }
+            
         }
         catch {
         }
