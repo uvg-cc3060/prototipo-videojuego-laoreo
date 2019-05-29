@@ -46,20 +46,22 @@ public class Throwing : MonoBehaviour {
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            Debug.Log("El tiempo es: " + tiempo);
+            //Debug.Log("El tiempo es: " + tiempo);
             tiempo += Time.deltaTime;
 
             if (tiempo >= 0.5)
             {
                 tiempo = 0;
+                Destroy(gameObject);
                 gameObject.tag = "Throwable";
+
             }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Colisiono con: " + collision.collider.tag);
+        //Debug.Log("Colisiono con: " + collision.collider.tag);
         try
         {
             if (collision.collider.tag == "Player")
